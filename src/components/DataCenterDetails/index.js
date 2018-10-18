@@ -53,25 +53,6 @@ class DataCenterDetails extends React.Component {
         <div class="slds-grid slds-gutters">
           <div class="slds-col slds-size_12-of-12">
             <Card
-              heading="Configuration"
-              icon={<Icon category="standard" name="account" size="small" />}
-            >
-              <Tabs id="tabs-example-default">
-                <TabsPanel label="OS">
-                  <ConfigDataTable config={this.props.dataCenter.config} />
-                </TabsPanel>
-                <TabsPanel label="App">
-                  <ConfigDataTable config={this.props.dataCenter.config} />
-                </TabsPanel>
-                <TabsPanel label="Hardware">
-                  <ConfigDataTable config={this.props.dataCenter.config} />
-                </TabsPanel>
-                <TabsPanel label="Firmware">
-                  <ConfigDataTable config={this.props.dataCenter.config} />
-                </TabsPanel>
-              </Tabs>
-            </Card>
-            <Card
               heading="Services"
               icon={<Icon category="standard" name="account" size="small" />}
             >

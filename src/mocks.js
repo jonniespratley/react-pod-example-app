@@ -109,6 +109,10 @@ const details = [
   }
 ];
 
+mockConfig.forEach((c, i) => {
+  c.value = faker.random.number();
+});
+
 const createDataCenter = (name, data) => {
   name = name.replace(/\s/g, "");
   return Object.assign(
