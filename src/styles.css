@@ -1,0 +1,15 @@
+.App {
+}
+html,
+body {
+  background: #d1dbe2;
+}
+.u-mb {
+  margin-bottom: 0.5rem;
+}
+.u-p {
+  padding: 0.2rem;
+}
+.slds-context-bar {
+  margin-top: 3.2rem;
+}

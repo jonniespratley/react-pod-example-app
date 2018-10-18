@@ -1,0 +1,52 @@
+{
+  "name": "salesforce-ui-example",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.js",
+  "dependencies": {
+    "@salesforce-ux/design-system": "2.7.4",
+    "@salesforce/babel-preset-design-system-react": "3.0.0",
+    "@salesforce/design-system-react": "0.8.27",
+    "chance": "1.0.16",
+    "enzyme": "3.3.0",
+    "enzyme-adapter-react-16": "1.1.1",
+    "faker": "4.1.0",
+    "react": "16.5.2",
+    "react-datamaps": "0.4.1",
+    "react-dom": "16.5.2",
+    "react-router-dom": "4.2.2",
+    "react-scripts": "2.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/__tests__/setup.js",
+    "collectCoverageFrom": [
+      "components/**/*.{js,jsx}",
+      "!<rootDir>/node_modules/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    },
+    "coverageReporters": [
+      "text"
+    ]
+  }
+}
