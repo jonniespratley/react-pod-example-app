@@ -1,6 +1,6 @@
 import React from "react";
 import { dataCenter, services } from "../../mocks";
-
+import { SummaryDetail, NameValuePair } from "../slds";
 import {
   Icon,
   MediaObject,
@@ -20,6 +20,16 @@ const trail = [<a href="/#/data-centers">Data Centers</a>];
 const navRight = () => <div>Nav</div>;
 const contentRight = () => <div>contentRight</div>;
 
+const CardPod = ({ name, children }) => (
+  <Card
+    className="slds-m-left_medim"
+    icon={<Icon category="standard" name="user" size="small" />}
+    heading={name}
+    key={name}
+  >
+    {children}
+  </Card>
+);
 class DataCenterDetails extends React.Component {
   constructor(props) {
     super(props);
@@ -33,6 +43,7 @@ class DataCenterDetails extends React.Component {
           contentRight={contentRight}
           variant="recordHome"
           truncate
+          icon={<Icon category="standard" name="account" size="large" />}
           details={this.props.dataCenter.details}
           trail={trail}
           info={`${this.props.dataCenter.url}`}
@@ -71,18 +82,24 @@ class DataCenterDetails extends React.Component {
               heading="Pods"
               icon={<Icon category="standard" name="account" size="small" />}
             />
-            {dataCenter.pods.map(pod => {
-              return (
-                <Card
-                  icon={<Icon category="standard" name="user" size="small" />}
-                  heading={pod.name}
-                  key={pod.name}
-                >
-                  {pod.children &&
-                    pod.children.map(cluster => <div>{cluster.name}</div>)}
-                </Card>
-              );
-            })}
+            <div className="slds-grid slds-wrap slds-gutters">
+              {dataCenter.pods.map(pod => {
+                return (
+                  <div className="slds-col slds-size_4 slds-small-size_6-of-12">
+                    <CardPod {...pod}>
+                      <ul className="slds-m-left_large">
+                        {pod.children &&
+                          pod.children.map(cluster => (
+                            <li>
+                              <CardPod name={cluster.name} />
+                            </li>
+                          ))}
+                      </ul>
+                    </CardPod>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
