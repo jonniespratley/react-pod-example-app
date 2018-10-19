@@ -61,7 +61,10 @@ class DataCenterDetails extends React.Component {
       selectedPod: null,
       selectedCluster: null,
       selectedNodes: null,
-      unread: []
+      unread: [],
+      trail: [
+        //{name: 'Pods'}
+      ]
     };
   }
 
@@ -111,7 +114,7 @@ class DataCenterDetails extends React.Component {
   };
 
   render() {
-    const { selectedPod, selectedCluster, dataCenter } = this.state;
+    const { selectedPod, selectedCluster, dataCenter, trail } = this.state;
     return (
       <div className="u-p">
         <PageHeader
@@ -137,6 +140,7 @@ class DataCenterDetails extends React.Component {
             </Card>
 
             <Card heading="Pods">
+              <Path trail={trail} />
               <div className="slds-grid">
                 <div className="slds-col">
                   <h2>Pods</h2>

@@ -9,7 +9,7 @@
     "@salesforce/babel-preset-design-system-react": "3.0.0",
     "@salesforce/design-system-react": "0.8.27",
     "chance": "1.0.16",
-    
+    "classnames": "2.2.6",
     "faker": "4.1.0",
     "react": "16.5.2",
     "react-datamaps": "0.4.1",

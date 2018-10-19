@@ -20,7 +20,7 @@ import DataCenterDetails from "../../pages/data-center-details";
 import { dataCenter } from "../../mocks";
 
 const navItems = [
-  // { id: "home", href: "/#", label: "Home", icon: "px-fea:catalog" },
+  { id: "home", href: "/#", label: "Home", icon: "px-fea:catalog" },
   {
     id: "data-centers",
     href: "/#/data-centers",
