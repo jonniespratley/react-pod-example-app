@@ -1,53 +1,6 @@
 import React from "react";
 import Datamap from "react-datamaps";
-const radius = 20;
-const bubbles = [
-  {
-    name: "San Jose",
-    radius,
-    country: "USA",
-    latitude: 37.2966853,
-    longitude: -122.0975973,
-    fillKey: "error"
-  },
-  {
-    name: "New York",
-    radius: 15,
-    country: "USA",
-    latitude: 38.9541077,
-    longitude: -77.496101,
-    fillKey: "bubbleFill"
-  },
-  {
-    name: "London",
-    radius,
-    country: "UK",
-    latitude: 51.501364,
-    longitude: -0.1440787,
-    fillKey: "bubbleFill"
-  },
-  {
-    name: "Buenos Aires",
-    radius: 10,
-    latitude: -34.6157142,
-    longitude: -58.5033602,
-    fillKey: "error"
-  },
-  {
-    name: "Sydney",
-    radius: 25,
-    latitude: -33.8567844,
-    longitude: 151.213108,
-    fillKey: "bubbleFill"
-  },
-  {
-    name: "Hong Kong",
-    radius: 15,
-    latitude: 22.3574372,
-    longitude: 113.8408289,
-    fillKey: "bubbleFill"
-  }
-];
+
 class Page extends React.Component {
   constructor(props) {
     super(props);
@@ -62,8 +15,9 @@ class Page extends React.Component {
     }
   };
   render() {
+    const { style } = this.props;
     return (
-      <div>
+      <div style={style}>
         <Datamap
           ref={this.addClickHandlers}
           scope="world"
@@ -79,13 +33,13 @@ class Page extends React.Component {
             USA: "blue",
             error: "red"
           }}
-          bubbles={this.props.bubbles || this.props.data}
+          bubbles={this.props.data || this.props.bubbles}
           bubbleOptions={{
             popupTemplate: (geo, data) => {
               return `
-                  <div class="hoverinfo">
-                  Name: ${data.name} <br/>
-                   IP: ${data.ip}
+                  <div class="hoverinfo slds-p-around_small">
+                    Name: ${data.name} <br/>
+                    IP: ${data.ip}
                   </div>
               `;
             }
@@ -96,8 +50,20 @@ class Page extends React.Component {
   }
 }
 Page.defaultProps = {
-  bubbles: null,
+  bubbles: [
+    {
+      name: "San Jose",
+      radius: 15,
+      country: "USA",
+      latitude: 37.2966853,
+      longitude: -122.0975973,
+      fillKey: "error"
+    }
+  ],
   data: null,
-  onClick: null
+  onClick: null,
+  style: {
+    minHeight: 500
+  }
 };
 export default Page;

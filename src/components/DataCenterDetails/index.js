@@ -1,7 +1,4 @@
 import React from "react";
-import { dataCenter, services } from "../../mocks";
-import { SummaryDetail, NameValuePair } from "../slds";
-import Path, { PathItem } from "../slds/Path";
 import {
   Icon,
   SplitViewListbox,
@@ -13,6 +10,19 @@ import {
   Button,
   ButtonGroup
 } from "@salesforce/design-system-react";
+
+import { dataCenter, services } from "../../mocks";
+import {
+  DataTable,
+  List,
+  SummaryDetail,
+  NameValuePair,
+  ListItem,
+  CardPod,
+  Grid,
+  Col
+} from "../slds";
+import Path, { PathItem } from "../slds/Path";
 
 import ConfigDataTable from "./ConfigDataTable";
 import ServicesList from "./ServicesList";
@@ -32,26 +42,13 @@ const listOptions = [
   }
 ];
 
-const ListItem = ({ label, selected, children, onClick }) => (
-  <div
-    className={`list-item ${selected ? "list-item--selected" : null}`}
-    onClick={onClick}
-  >
-    <span>{label}</span>
-    {children}
-  </div>
-);
+const defaultSteps = [
+  { title: "Pods" },
+  { title: "Clusters" },
+  { title: "Nodes" }
+  // { title: "Config" }
+];
 
-const CardPod = ({ name, children }) => (
-  <Card
-    className="slds-m-left_medim"
-    icon={<Icon category="standard" name="user" size="small" />}
-    heading={name}
-    key={name}
-  >
-    {children}
-  </Card>
-);
 class DataCenterDetails extends React.Component {
   constructor(props) {
     super(props);
@@ -60,40 +57,73 @@ class DataCenterDetails extends React.Component {
       selected: [listOptions[listOptions.length - 2]],
       selectedPod: null,
       selectedCluster: null,
-      selectedNodes: null,
+      selectedNodes: [],
       unread: [],
-      trail: [
-        //{name: 'Pods'}
-      ]
+      steps: props.steps,
+      trail: []
     };
   }
 
+  clearSelected = item => {
+    item.selected = false;
+    if (item.children) item.children.forEach(this.clearSelected);
+    return item;
+  };
+
   clearSelectedNodes = () => {
-    const { selectedPod } = this.state;
-    selectedPod.children.forEach(p => (p.selected = false));
+    this.setState({ selectedNodes: [] });
+  };
+
+  clearAllSelected = () => {
+    const { selectedPod, dataCenter } = this.state;
+    if (dataCenter) dataCenter.pods.forEach(this.clearSelected);
+    if (selectedPod) selectedPod.children.forEach(this.clearSelected);
   };
 
   handleSelect = (event, { selectedItems, item }) => {
     console.log(selectedItems, item);
   };
 
-  handleNodeSelect = (event, node) => {
-    console.log(node);
-  };
-
   handlePodSelect = (event, pod) => {
-    const { dataCenter } = this.state;
-    dataCenter.pods.forEach(p => (p.selected = false));
+    console.log("handlePodSelect", pod);
+    this.clearAllSelected();
+    this.state.steps[0].active = true;
+
     console.log(pod);
     pod.selected = !pod.selected;
-    this.setState({ selectedPod: pod, selectedCluster: null });
+    this.setState({ selectedPod: pod });
   };
 
   handleClusterSelect = (event, cluster) => {
-    const { selectedPod } = this.state;
-    selectedPod.children.forEach(p => (p.selected = false));
+    console.log("handleClusterSelect", cluster);
+    this.setState({ selectedCluster: null });
     cluster.selected = !cluster.selected;
-    this.setState({ selectedPod, selectedCluster: cluster });
+    this.setState({ selectedCluster: cluster });
+  };
+
+  handleNodeSelect = (event, node) => {
+    const { selectedNodes } = this.state;
+    const nodes = selectedNodes || [];
+
+    node.selected = !node.selected;
+
+    console.log("handleNodeSelect", node, nodes.indexOf(node));
+    const nodeIndex = nodes.indexOf(node);
+    if (node.selected && nodeIndex === -1) {
+      console.log("add to compare", node);
+      nodes.concat(selectedNodes);
+      // nodes = selectedNodes || [];
+      nodes.push(node);
+    } else {
+      nodes.splice(nodeIndex, 1);
+    }
+    this.setState({ selectedNodes: nodes });
+  };
+
+  handlePathClick = event => {
+    //event.persist();
+    //event.preventDefault();
+    console.log(event);
   };
 
   renderPods = pods => {
@@ -103,20 +133,26 @@ class DataCenterDetails extends React.Component {
      * | Pods | Clusters | Nodes
      */
     return pods.map(pod => (
-      <div className="slds-col slds-small-size_12-of-12">
-        <ListItem pod={pod}>
-          <ul className="slds-m-left_large">
-            {pod.children && this.renderPods(pod.children)}
-          </ul>
-        </ListItem>
-      </div>
+      <ListItem pod={pod}>
+        <ul className="slds-m-left_large">
+          {pod.children && this.renderPods(pod.children)}
+        </ul>
+      </ListItem>
     ));
   };
 
   render() {
-    const { selectedPod, selectedCluster, dataCenter, trail } = this.state;
+    const {
+      match,
+      selectedPod,
+      selectedCluster,
+      selectedNodes,
+      dataCenter,
+      trail,
+      steps
+    } = this.state;
     return (
-      <div className="u-p">
+      <div className="">
         <PageHeader
           title={dataCenter.name}
           navRight={navRight}
@@ -128,57 +164,71 @@ class DataCenterDetails extends React.Component {
           trail={trail}
           info={`${dataCenter.url}`}
         />
-        <br />
 
-        <div class="slds-grid slds-gutters">
-          <div class="slds-col slds-size_12-of-12">
-            <Card
-              heading="Services"
-              icon={<Icon category="standard" name="account" size="small" />}
-            >
-              <ServicesList services={services} />
-            </Card>
+        <Grid gutters>
+          <Col size="12-of-12">
+            {/* Pods -> Clusters -> Nodes  */}
 
-            <Card heading="Pods">
-              <Path trail={trail} />
-              <div className="slds-grid">
-                <div className="slds-col">
-                  <h2>Pods</h2>
-                  {dataCenter.pods.map(pod => (
+            <Path
+              paths={steps}
+              showAction
+              actionLabel="Compare"
+              onClick={this.handlePathClick}
+            />
+
+            <Grid>
+              {/* pods */}
+              <Col size="1-of-3">
+                {dataCenter.pods.map(pod => (
+                  <ListItem
+                    label={pod.name}
+                    selected={pod.selected}
+                    onClick={e => this.handlePodSelect(e, pod)}
+                  />
+                ))}
+              </Col>
+
+              {/* clusters */}
+              <Col size="1-of-3">
+                {selectedPod &&
+                  selectedPod.children.map(cluster => (
                     <ListItem
-                      label={pod.name}
-                      selected={pod.selected}
-                      onClick={e => this.handlePodSelect(e, pod)}
+                      label={cluster.name}
+                      selected={cluster.selected}
+                      onClick={e => this.handleClusterSelect(e, cluster)}
                     />
                   ))}
-                </div>
-                <div className="slds-col">
-                  <h2>Clusters</h2>
+              </Col>
+              {/* nodes */}
+              <Col size="1-of-3">
+                {selectedPod &&
+                  selectedCluster &&
+                  selectedCluster.children.map(n => (
+                    <ListItem
+                      label={n.name}
+                      selected={n.selected}
+                      onClick={e => this.handleNodeSelect(e, n)}
+                    />
+                  ))}
+              </Col>
+            </Grid>
 
-                  {selectedPod &&
-                    selectedPod.children.map(cluster => (
-                      <ListItem
-                        label={cluster.name}
-                        selected={cluster.selected}
-                        onClick={e => this.handleClusterSelect(e, cluster)}
-                      />
-                    ))}
-                </div>
-                <div className="slds-col">
-                  <h2>Nodes</h2>
-                  {selectedCluster &&
-                    selectedCluster.children.map(n => (
-                      <ListItem
-                        label={n.name}
-                        selected={n.selected}
-                        onClick={e => this.handleNodeSelect(e, n)}
-                      />
-                    ))}
-                </div>
-              </div>
-            </Card>
+            <Card heading="Compare" />
+            <br />
+            <Grid gutters wrap>
+              {selectedNodes &&
+                selectedNodes.map(node => (
+                  <Col key={node.key} size="1-of-2">
+                    <CardPod {...node}>
+                      <ConfigDataTable id={node.key} config={node.config} />
+                    </CardPod>
+                    <br />
+                  </Col>
+                ))}
+            </Grid>
 
             {/**
+            
             <div className="slds-grid">
               <div className="slds-col">
                 <SplitViewListbox
@@ -196,13 +246,15 @@ class DataCenterDetails extends React.Component {
 
             </div>
              */}
-          </div>
-        </div>
+          </Col>
+        </Grid>
       </div>
     );
   }
 }
 DataCenterDetails.defaultProps = {
+  trail: null,
+  steps: defaultSteps,
   dataCenter: {
     name: "data-center-1",
     pods: []

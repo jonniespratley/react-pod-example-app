@@ -1,5 +1,7 @@
 import React from "react";
 import classNames from "classnames";
+import { Icon, Card } from "@salesforce/design-system-react";
+
 import Panel from "./Panel";
 import Path, { PathItem } from "./Path";
 import Tree from "../Tree/index";
@@ -31,6 +33,18 @@ export const ListItem = ({ label, selected, children, onClick }) => (
     {children}
   </div>
 );
+
+export const CardPod = ({ name, children }) => (
+  <Card
+    className="slds-m-left_medim"
+    icon={<Icon category="standard" name="user" size="small" />}
+    heading={name}
+    key={name}
+  >
+    {children}
+  </Card>
+);
+
 export const NameValue = ({ name, label, value }) => (
   <dl className="slds-list_horizontal slds-wrap slds-m-around_small">
     <dt

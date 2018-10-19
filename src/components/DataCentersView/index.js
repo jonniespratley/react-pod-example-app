@@ -1,4 +1,5 @@
 import React from "react";
+import { Grid, Col } from "../slds/index";
 import WorldMap from "../WorldMap/index";
 import DataCentersPageHeader from "./DataCentersPageHeader";
 import { bubbles } from "../../mocks";
@@ -27,16 +28,14 @@ const navRight = () => <div>Nav</div>;
 const contentRight = () => <div>contentRight</div>;
 
 class DataCentersView extends React.Component {
-  handleRowChange = e => {
-    console.log(e);
-  };
   handleMapClick = e => {
     if (this.props.onClick) {
       this.props.onClick(e);
     }
   };
+
   render() {
-    const { dataCenters } = this.props;
+    const { dataCenters, showTable, showMap = true } = this.props;
     return (
       <div className="slds-m-horizontal_small">
         {/** 
@@ -50,28 +49,28 @@ class DataCentersView extends React.Component {
       info="6 items"
     />
     */}
-        <WorldMap data={dataCenters} onClick={this.handleMapClick} />
-        <br />
-        <br />
 
-        <div class="slds-grid slds-gutters">
-          <div class="slds-col slds-size_12-of-12">
-            <Card heading="All Data Centers">
-              <DataTable items={dataCenters} id="dcDataTable">
-                <DataTableColumn property="name" key="dc-name" label="Name">
-                  <CustomDataTableCell />
-                </DataTableColumn>
-                <DataTableColumn
-                  key="dc-region"
-                  label="Region"
-                  property="region"
-                  truncate
-                />
-              </DataTable>
-            </Card>
-          </div>
-        </div>
-        <br />
+        <WorldMap data={dataCenters} onClick={this.handleMapClick} />
+
+        {showTable && (
+          <Grid>
+            <Col>
+              <Card heading="All Data Centers">
+                <DataTable items={dataCenters} id="dcDataTable">
+                  <DataTableColumn property="name" key="dc-name" label="Name">
+                    <CustomDataTableCell />
+                  </DataTableColumn>
+                  <DataTableColumn
+                    key="dc-region"
+                    label="Region"
+                    property="region"
+                    truncate
+                  />
+                </DataTable>
+              </Card>
+            </Col>
+          </Grid>
+        )}
       </div>
     );
   }

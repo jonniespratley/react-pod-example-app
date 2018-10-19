@@ -1,8 +1,9 @@
 import React from "react";
 import { Icon, TabsPanel, Tabs, Card } from "@salesforce/design-system-react";
-export default ({ config }) => (
+import ConfigDataTable from "./ConfigDataTable";
+export default ({ heading = "Configuration", config }) => (
   <Card
-    heading="Configuration"
+    heading={heading}
     icon={<Icon category="standard" name="account" size="small" />}
   >
     <Tabs id="tabs-example-default">
