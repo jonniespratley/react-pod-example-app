@@ -135,7 +135,6 @@ const createDataCenter = (name, data) => {
       country: faker.address.country(),
       region: faker.address.stateAbbr(),
       radius: faker.random.number(25),
-      fillKey: "bubbleFill",
       latitude: faker.address.latitude(),
       longitude: faker.address.longitude(),
       fillKey: faker.random.number(2) % 20 === 0 ? "bubbleFill" : "error"

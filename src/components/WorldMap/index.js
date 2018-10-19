@@ -52,10 +52,20 @@ class Page extends React.Component {
   constructor(props) {
     super(props);
   }
+  addClickHandlers = ref => {
+    if (ref && ref.map) {
+      ref.map.svg.selectAll(".datamaps-bubble").on("click", bubble => {
+        if (this.props.onClick) {
+          this.props.onClick(bubble);
+        }
+      });
+    }
+  };
   render() {
     return (
       <div>
         <Datamap
+          ref={this.addClickHandlers}
           scope="world"
           responsive
           geographyConfig={{
@@ -87,6 +97,7 @@ class Page extends React.Component {
 }
 Page.defaultProps = {
   bubbles: null,
-  data: null
+  data: null,
+  onClick: null
 };
 export default Page;

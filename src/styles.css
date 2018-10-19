@@ -19,3 +19,18 @@ body {
 .slds-context-bar {
   margin-top: 3.2rem;
 }
+
+.list-item {
+  background: #fff;
+  /* Rectangle 5: */
+  border: 1px solid #dee2e9;
+  border-radius: 4px;
+  padding: 0.7rem;
+  margin: 0.5rem 0;
+}
+
+.list-item--selected {
+  /* Rectangle 5: */
+  background: #eff8fd;
+  border: 1px solid #d9dee6;
+}

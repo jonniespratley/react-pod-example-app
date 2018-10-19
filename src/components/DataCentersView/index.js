@@ -1,5 +1,6 @@
 import React from "react";
 import WorldMap from "../WorldMap/index";
+import DataCentersPageHeader from "./DataCentersPageHeader";
 import { bubbles } from "../../mocks";
 import {
   Card,
@@ -29,6 +30,11 @@ class DataCentersView extends React.Component {
   handleRowChange = e => {
     console.log(e);
   };
+  handleMapClick = e => {
+    if (this.props.onClick) {
+      this.props.onClick(e);
+    }
+  };
   render() {
     const { dataCenters } = this.props;
     return (
@@ -44,7 +50,8 @@ class DataCentersView extends React.Component {
       info="6 items"
     />
     */}
-        <WorldMap data={dataCenters} />
+        <WorldMap data={dataCenters} onClick={this.handleMapClick} />
+        <br />
         <br />
 
         <div class="slds-grid slds-gutters">
@@ -70,6 +77,7 @@ class DataCentersView extends React.Component {
   }
 }
 DataCentersView.defaultProps = {
-  dataCenters: []
+  dataCenters: [],
+  onClick: null
 };
 export default DataCentersView;
