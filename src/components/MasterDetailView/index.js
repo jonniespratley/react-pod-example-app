@@ -13,19 +13,31 @@ class MasterDetailView extends React.Component {
   }
 
   handleSelect = (event, { selectedItems, item }) => {
+    if (this.props.onSelect) {
+      this.props.onSelect({ selectedItems, item });
+    }
+    console.log(selectedItems, item);
+  };
+  handleSort = (event, { selectedItems, item }) => {
+    if (this.props.onSort) {
+      this.props.onSort({ selectedItems, item });
+    }
     console.log(selectedItems, item);
   };
   masterView = () => {
-    const { items, labels, key, selected } = this.props;
+    const { items, labels, key, selected, listItem } = this.props;
     return (
       <div>
         <SplitViewListbox
           key={key}
+          listItem={listItem}
           selection={selected}
+          multiple={this.props.multiple}
           labels={labels}
           options={items}
           events={{
-            onSelect: this.handleSelect
+            onSelect: this.handleSelect,
+            onSort: this.handleSort
           }}
         />
       </div>
@@ -49,6 +61,7 @@ class MasterDetailView extends React.Component {
 }
 MasterDetailView.defaultProps = {
   key: "2",
+  multiple: false,
   items: [],
   selected: [],
   selection: [],
