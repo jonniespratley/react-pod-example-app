@@ -1,4 +1,5 @@
 import React from "react";
+import faker from "faker";
 import { Button, Card } from "@salesforce/design-system-react";
 import WorldMap from "../components/WorldMap/index";
 import MasterDetailView from "../components/MasterDetailView";
@@ -21,22 +22,27 @@ const steps = [
 
 const listOptions = [
   {
-    id: "009",
     label: "Item Label",
     bottomLeftText: "MedLife, Inc.",
     topRightText: "68",
-
     bottomRightText: "New"
   }
 ];
-const mockItems = new Array(5).fill(listOptions[0]);
+
+const mockItems = [];
+let count = 10;
+while (count--) {
+  let o = Object.assign({}, listOptions[0]);
+  o.id = faker.random.uuid(2);
+  mockItems.push(o);
+}
 
 const List = ({ items }) =>
   items.map(item => <ListItem {...item} key={item.label} />);
 
 const Page = () => (
   <div className="u-p">
-    <MasterDetailView items={mockItems} />
+    <MasterDetailView multiple items={mockItems} />
 
     <div hidden>
       <Path paths={steps} gutters />

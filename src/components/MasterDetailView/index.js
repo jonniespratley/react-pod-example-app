@@ -18,11 +18,11 @@ class MasterDetailView extends React.Component {
     }
     console.log(selectedItems, item);
   };
-  handleSort = (event, { selectedItems, item }) => {
+  handleSort = event => {
     if (this.props.onSort) {
-      this.props.onSort({ selectedItems, item });
+      this.props.onSort(event);
     }
-    console.log(selectedItems, item);
+    console.log("handleSort", event);
   };
   masterView = () => {
     const { items, labels, key, selected, listItem } = this.props;
