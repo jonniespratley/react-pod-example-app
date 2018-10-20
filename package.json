@@ -8,7 +8,6 @@
     "@salesforce-ux/design-system": "2.7.4",
     "@salesforce/babel-preset-design-system-react": "3.0.0",
     "@salesforce/design-system-react": "0.8.27",
-    "chance": "1.0.16",
     "classnames": "2.2.6",
     "faker": "4.1.0",
     "react": "16.5.2",
@@ -29,23 +28,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>/__tests__/setup.js",
-    "collectCoverageFrom": [
-      "components/**/*.{js,jsx}",
-      "!<rootDir>/node_modules/"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 90,
-        "functions": 90,
-        "lines": 90,
-        "statements": 90
-      }
-    },
-    "coverageReporters": [
-      "text"
-    ]
-  }
+  ]
 }
