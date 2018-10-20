@@ -1,8 +1,11 @@
 {
-  "name": "salesforce-ui-example",
+  "name": "salesforce-ui-example-forked",
   "version": "1.0.0",
   "description": "",
-  "keywords": [],
+  "keywords": [
+    "salesforce",
+    "react"
+  ],
   "main": "src/index.js",
   "dependencies": {
     "@salesforce-ux/design-system": "2.7.4",

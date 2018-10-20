@@ -78,8 +78,9 @@ export const createMockNodes = (name, count = 5) => {
       id: faker.random.uuid(),
       key: faker.random.uuid(),
       name: `${name}-node-${i}`,
+      label: `${name}-node-${i}`,
       config: mockConfig.map(c => {
-        c.name = `node-${Date.now()}-config`;
+        c.name = faker.random.word();
         c.value = faker.random.number();
         return c;
       })
@@ -120,13 +121,7 @@ export const services = [
 
 const details = [
   { label: "Field 1", content: "Value 1" },
-  { label: "Field 2", content: "Value 2" },
-  { label: "Field 3", content: "Value 3" },
-  {
-    label: "Field 4",
-    content: "Description (2-line truncation)",
-    truncate: true
-  }
+  { label: "Field 2", content: "Value 2" }
 ];
 
 const createDataCenter = (name, data) => {
@@ -137,6 +132,7 @@ const createDataCenter = (name, data) => {
     {
       id: name,
       name: name,
+      label: name,
       config: mockConfig,
       services: services,
       pods: mockPods,

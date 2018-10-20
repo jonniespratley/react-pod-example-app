@@ -43,9 +43,9 @@ const listOptions = [
 ];
 
 const defaultSteps = [
-  { title: "Pods" },
-  { title: "Clusters" },
-  { title: "Nodes" }
+  { id: "pods", title: "Pods" },
+  { id: "clusters", title: "Clusters" },
+  { id: "nodes", title: "Nodes" }
   // { title: "Config" }
 ];
 
@@ -154,24 +154,27 @@ class DataCenterDetails extends React.Component {
     return (
       <div className="">
         <PageHeader
+          label="Data Center"
           title={dataCenter.name}
           navRight={navRight}
           contentRight={contentRight}
-          variant="recordHome"
+          variant="objectHome"
           truncate
-          icon={<Icon category="standard" name="account" size="large" />}
-          details={dataCenter.details}
+          icon={<Icon category="standard" name="account" />}
+          _details={dataCenter.details}
           trail={trail}
-          info={`${dataCenter.url}`}
+          _info={`${dataCenter.url}`}
         />
+        <br />
 
         <Grid gutters>
-          <Col size="12-of-12">
+          <Col size="8-of-12">
+            <Card heading="Pods & Clusters" />
+
             {/* Pods -> Clusters -> Nodes  */}
 
             <Path
               paths={steps}
-              showAction
               actionLabel="Compare"
               onClick={this.handlePathClick}
             />
@@ -199,6 +202,7 @@ class DataCenterDetails extends React.Component {
                     />
                   ))}
               </Col>
+
               {/* nodes */}
               <Col size="1-of-3">
                 {selectedPod &&
@@ -213,8 +217,9 @@ class DataCenterDetails extends React.Component {
               </Col>
             </Grid>
 
-            <Card heading="Compare" />
             <br />
+            <Card heading="Configurations" />
+
             <Grid gutters wrap>
               {selectedNodes &&
                 selectedNodes.map(node => (
@@ -227,25 +232,31 @@ class DataCenterDetails extends React.Component {
                 ))}
             </Grid>
 
-            {/**
-            
-            <div className="slds-grid">
-              <div className="slds-col">
-                <SplitViewListbox
-                  key="2"
-                  labels={{
-                    header: "Pods"
-                  }}
-                  options={listOptions}
-                  events={{
-                    onSelect: this.handleSelect
-                  }}
-                  selection={this.state.selected}
-                />
+            {
+              <div className="slds-grid">
+                <div className="slds-col">
+                  <SplitViewListbox
+                    key="2"
+                    labels={{
+                      header: "Pods"
+                    }}
+                    options={listOptions}
+                    events={{
+                      onSelect: this.handleSelect
+                    }}
+                    selection={this.state.selected}
+                  />
+                </div>
               </div>
-
-            </div>
-             */}
+            }
+          </Col>
+          <Col size="4-of-12">
+            <Card heading="Details">
+              <ServicesList
+                heading="Services:"
+                services={dataCenter.services}
+              />
+            </Card>
           </Col>
         </Grid>
       </div>

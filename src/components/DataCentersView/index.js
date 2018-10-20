@@ -35,19 +35,20 @@ class DataCentersView extends React.Component {
   };
 
   render() {
-    const { dataCenters, showTable, showMap = true } = this.props;
+    const { title, dataCenters, showTable = true, showMap = true } = this.props;
     return (
-      <div className="slds-m-horizontal_small">
+      <div className="slds-m-around_small">
+        <PageHeader
+          title={title}
+          navRight={navRight}
+          contentRight={contentRight}
+          variant="objectHome"
+          truncate
+          trail={trail}
+          info={`${dataCenters.length} records`}
+        />
         {/** 
-    <PageHeader
-      title={name}
-      navRight={navRight}
-      contentRight={contentRight}
-      variant="objectHome"
-      truncate
-      trail={trail}
-      info="6 items"
-    />
+    
     */}
 
         <WorldMap data={dataCenters} onClick={this.handleMapClick} />
@@ -55,7 +56,7 @@ class DataCentersView extends React.Component {
         {showTable && (
           <Grid>
             <Col>
-              <Card heading="All Data Centers">
+              <Card heading={title}>
                 <DataTable items={dataCenters} id="dcDataTable">
                   <DataTableColumn property="name" key="dc-name" label="Name">
                     <CustomDataTableCell />
@@ -77,6 +78,7 @@ class DataCentersView extends React.Component {
 }
 DataCentersView.defaultProps = {
   dataCenters: [],
-  onClick: null
+  onClick: null,
+  title: "All Data Centers"
 };
 export default DataCentersView;
