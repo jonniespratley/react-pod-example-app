@@ -72,10 +72,12 @@ class GlobalNavBar extends React.Component {
            */}
           </GlobalNavigationBarRegion>
           <GlobalNavigationBarRegion region="tertiary">
+            {/**
             <GlobalNavigationBarLink
               href="javascript:void(0);"
               label="Actions"
             />
+            */}
           </GlobalNavigationBarRegion>
         </GlobalNavigationBar>
       </div>

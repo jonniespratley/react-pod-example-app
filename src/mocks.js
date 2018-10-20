@@ -70,26 +70,46 @@ export const mockNodes = [
   { name: "node-2" },
   { name: "node-3" }
 ];
+
+export const createMockNodes = (name, count = 5) => {
+  const out = [];
+  for (let i = 0; i < count; i++) {
+    out.push({
+      id: faker.random.uuid(),
+      key: faker.random.uuid(),
+      name: `${name}-node-${i}`,
+      config: mockConfig.map(c => {
+        c.name = `node-${Date.now()}-config`;
+        c.value = faker.random.number();
+        return c;
+      })
+    });
+  }
+  return out;
+};
+
 export const mockClusters = [
-  { name: "cluster-1", children: mockNodes },
-  { name: "cluster-2", children: mockNodes },
-  { name: "cluster-3", children: mockNodes }
+  { name: "cluster-1", children: createMockNodes("c1") },
+  { name: "cluster-2", children: createMockNodes("c1") },
+  { name: "cluster-3", children: createMockNodes("p1") }
 ];
 
 export const mockPods = [
   {
-    name: "pod-1",
-    children: mockClusters
+    name: "p1",
+    children: [{ name: "p1-cluster-1", children: createMockNodes("c1") }]
   },
   {
-    name: "pod-2",
-    children: mockClusters
+    name: "p2",
+    children: [{ name: "p2-cluster-2", children: createMockNodes("c2") }]
   },
   {
-    name: "pod-3",
-    children: mockClusters
+    name: "p3",
+    children: [{ name: "p3-cluster-3", children: mockNodes }]
   }
 ];
+
+console.log("mockPods", mockPods);
 
 export const services = [
   { name: "Postgres" },
@@ -131,7 +151,6 @@ const createDataCenter = (name, data) => {
       country: faker.address.country(),
       region: faker.address.stateAbbr(),
       radius: faker.random.number(25),
-      fillKey: "bubbleFill",
       latitude: faker.address.latitude(),
       longitude: faker.address.longitude(),
       fillKey: faker.random.number(2) % 20 === 0 ? "bubbleFill" : "error"

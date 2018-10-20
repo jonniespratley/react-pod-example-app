@@ -1,4 +1,10 @@
+/*
+@import url("https://cdnjs.cloudflare.com/ajax/libs/design-system/2.6.2/styles/salesforce-lightning-design-system.min.css");
+
+*/
+@import url("https://unpkg.com/@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.min.css");
 .App {
+  display: block;
 }
 html,
 body {
@@ -12,4 +18,19 @@ body {
 }
 .slds-context-bar {
   margin-top: 3.2rem;
+}
+
+.list-item {
+  background: #fff;
+  /* Rectangle 5: */
+  border: 1px solid #dee2e9;
+  border-radius: 4px;
+  padding: 0.7rem;
+  margin: 0.5rem 0;
+}
+
+.list-item--selected {
+  /* Rectangle 5: */
+  background: #eff8fd;
+  border: 1px solid #d9dee6;
 }
