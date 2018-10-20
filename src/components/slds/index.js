@@ -58,8 +58,11 @@ export const NameValue = ({ name, label, value }) => (
     </dd>
   </dl>
 );
-export const NameValuePair = ({ items = [] }) =>
-  items.map(item => <NameValue {...item} />);
+export const NameValuePair = ({ items = [] }) => (
+  <div className="slds-box slds-m-left_medium slds-m-bottom_medium slds-list_horizontal slds-wrap">
+    {items.map(item => <NameValue {...item} />)}
+  </div>
+);
 
 export const SummaryDetail = ({
   title = "Summary Title",

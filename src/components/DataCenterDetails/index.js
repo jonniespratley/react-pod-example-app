@@ -169,6 +169,15 @@ class DataCenterDetails extends React.Component {
 
         <Grid gutters>
           <Col size="8-of-12">
+            <Tabs variant="scoped" id="tabs-example-scoped">
+              <TabsPanel label="Item One">Item One Content</TabsPanel>
+              <TabsPanel label="Item Two">Item Two Content</TabsPanel>
+              <TabsPanel label="Item Three">Item Three Content</TabsPanel>
+              <TabsPanel disabled label="Disabled">
+                Disabled Content
+              </TabsPanel>
+            </Tabs>
+
             <Card heading="Pods & Clusters" />
 
             {/* Pods -> Clusters -> Nodes  */}
@@ -231,31 +240,10 @@ class DataCenterDetails extends React.Component {
                   </Col>
                 ))}
             </Grid>
-
-            {
-              <div className="slds-grid">
-                <div className="slds-col">
-                  <SplitViewListbox
-                    key="2"
-                    labels={{
-                      header: "Pods"
-                    }}
-                    options={listOptions}
-                    events={{
-                      onSelect: this.handleSelect
-                    }}
-                    selection={this.state.selected}
-                  />
-                </div>
-              </div>
-            }
           </Col>
           <Col size="4-of-12">
-            <Card heading="Details">
-              <ServicesList
-                heading="Services:"
-                services={dataCenter.services}
-              />
+            <Card heading="Service Instances">
+              <ServicesList services={dataCenter.services} />
             </Card>
           </Col>
         </Grid>

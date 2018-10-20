@@ -63,7 +63,7 @@ export const bubbles = [
   }
 ];
 
-export const mockConfig = Array(10).fill({ name: "key-1", value: "value-1" });
+export const mockConfig = Array(4).fill({ name: "key-1", value: "value-1" });
 
 export const mockNodes = [
   { name: "node-1" },
@@ -71,7 +71,7 @@ export const mockNodes = [
   { name: "node-3" }
 ];
 
-export const createMockNodes = (name, count = 5) => {
+export const createMockNodes = (name, count = 3) => {
   const out = [];
   for (let i = 0; i < count; i++) {
     out.push({
@@ -156,7 +156,7 @@ const createDataCenter = (name, data) => {
 
 export const dataCenters = [];
 
-const count = 15;
+const count = 10;
 for (let i = 0; i < count; i++) {
   dataCenters.push(
     createDataCenter(

@@ -6,6 +6,9 @@ import {
   SplitViewHeader,
   SplitViewListbox
 } from "@salesforce/design-system-react";
+import HeaderContentRight from "./HeaderContentRight";
+
+import DetailsView from "./DetailsView";
 
 class MasterDetailView extends React.Component {
   constructor(props) {
@@ -16,20 +19,38 @@ class MasterDetailView extends React.Component {
     if (this.props.onSelect) {
       this.props.onSelect({ selectedItems, item });
     }
-    console.log(selectedItems, item);
   };
   handleSort = event => {
     if (this.props.onSort) {
       this.props.onSort(event);
     }
-    console.log("handleSort", event);
   };
   masterView = () => {
-    const { items, labels, key, selected, listItem } = this.props;
+    const {
+      items,
+      labels,
+      headerTitle,
+      headerNavRight,
+      headerContentRight,
+      selected,
+      listItem
+    } = this.props;
     return (
       <div>
+        <SplitViewHeader
+          key="1"
+          contentRight={headerContentRight}
+          navRight={headerNavRight}
+          iconAssistiveText="User"
+          iconCategory="standard"
+          iconName="lead"
+          info={`${items.length} items`}
+          title={headerTitle}
+          truncate
+          variant="objectHome"
+        />
         <SplitViewListbox
-          key={key}
+          key="2"
           listItem={listItem}
           selection={selected}
           multiple={this.props.multiple}
@@ -44,7 +65,11 @@ class MasterDetailView extends React.Component {
     );
   };
   detailView = () => {
-    return <div>Details</div>;
+    return (
+      <div>
+        <DetailsView selected={this.props.selected} />
+      </div>
+    );
   };
   render() {
     return (
@@ -61,6 +86,9 @@ class MasterDetailView extends React.Component {
 }
 MasterDetailView.defaultProps = {
   key: "2",
+  headerNavRight: {},
+  headerContentRight: () => <HeaderContentRight />,
+  headerTitle: "Master Detail",
   multiple: false,
   items: [],
   selected: [],

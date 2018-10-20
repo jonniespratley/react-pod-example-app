@@ -1,7 +1,7 @@
 {
   "name": "salesforce-ui-example-forked",
   "version": "1.0.0",
-  "description": "",
+  "description": "Example React app using salesforce ui.",
   "keywords": [
     "salesforce",
     "react"

@@ -30,21 +30,42 @@ const listOptions = [
 ];
 
 const mockItems = [];
-let count = 10;
+let count = 5;
 while (count--) {
   let o = Object.assign({}, listOptions[0]);
   o.id = faker.random.uuid(2);
   mockItems.push(o);
 }
 
+console.log("Transform into list view", dataCenter);
+
 const List = ({ items }) =>
   items.map(item => <ListItem {...item} key={item.label} />);
 
-const Page = () => (
-  <div className="u-p">
-    <MasterDetailView multiple items={mockItems} />
+class HomePage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: [mockItems[0]],
+      items: mockItems
+    };
+  }
+  onSelect = e => {
+    console.log("onSelect", e);
+  };
+  render() {
+    return (
+      <div>
+        <div className="u-p">
+          <MasterDetailView
+            multiple
+            onSelect={this.onSelect}
+            selected={this.state.selected}
+            items={this.state.items}
+          />
 
-    <div hidden>
+          {/*
+      <div hidden>
       <Path paths={steps} gutters />
       <Grid gutters>
         {steps.map(step => (
@@ -54,7 +75,11 @@ const Page = () => (
         ))}
       </Grid>
     </div>
-  </div>
-);
+     */}
+        </div>
+      </div>
+    );
+  }
+}
 
-export default Page;
+export default HomePage;
