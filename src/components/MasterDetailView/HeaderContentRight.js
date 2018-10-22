@@ -44,7 +44,9 @@ const HeaderContentRight = ({ icon, options = defaultOptions, onSelect }) => (
       iconName="refresh"
       iconVariant="border"
       variant="icon"
-    />
+    >
+      Refresh
+    </Button>
   </div>
 );
 export default HeaderContentRight;

@@ -65,48 +65,53 @@ export const bubbles = [
 
 export const mockConfig = Array(4).fill({ name: "key-1", value: "value-1" });
 
-export const mockNodes = [
-  { name: "node-1" },
-  { name: "node-2" },
-  { name: "node-3" }
-];
+export const mockNodes = [];
 
-export const createMockNodes = (name, count = 3) => {
+export const createMockNodes = (name, count = 5) => {
   const out = [];
+
   for (let i = 0; i < count; i++) {
-    out.push({
-      id: faker.random.uuid(),
-      key: faker.random.uuid(),
+    const id = faker.random.uuid();
+    const n = {
+      id: id,
+      key: id,
       name: `${name}-node-${i}`,
       label: `${name}-node-${i}`,
-      config: mockConfig.map(c => {
-        c.name = faker.random.word();
-        c.value = faker.random.number();
-        return c;
-      })
+      address: faker.internet.ip(),
+      config: mockConfig
+    };
+    n.config.forEach(c => {
+      c.name = faker.random.word();
+      c.value = faker.random.alphaNumeric();
     });
+
+    out.push(n);
   }
   return out;
 };
 
 export const mockClusters = [
-  { name: "cluster-1", children: createMockNodes("c1") },
-  { name: "cluster-2", children: createMockNodes("c1") },
-  { name: "cluster-3", children: createMockNodes("p1") }
+  { name: "cluster-1", children: createMockNodes("cluster-1") },
+  { name: "cluster-2", children: createMockNodes("cluster-2") },
+  { name: "cluster-3", children: createMockNodes("cluster-3") }
 ];
 
 export const mockPods = [
   {
-    name: "p1",
+    name: "pod-1",
     children: [{ name: "p1-cluster-1", children: createMockNodes("c1") }]
   },
   {
-    name: "p2",
-    children: [{ name: "p2-cluster-2", children: createMockNodes("c2") }]
+    name: "pod-2",
+    children: [{ name: "p2-cluster-1", children: createMockNodes("c2") }]
   },
   {
-    name: "p3",
-    children: [{ name: "p3-cluster-3", children: mockNodes }]
+    name: "pod-3",
+    children: [{ name: "p3-cluster-1", children: createMockNodes("c3", 10) }]
+  },
+  {
+    name: "pod-4",
+    children: [{ name: "p4-cluster-1", children: createMockNodes("c4", 10) }]
   }
 ];
 

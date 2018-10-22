@@ -10,7 +10,7 @@ import {
   Button,
   ButtonGroup
 } from "@salesforce/design-system-react";
-
+import PodCards from "./PodCards";
 import { dataCenter, services } from "../../mocks";
 import {
   DataTable,
@@ -25,6 +25,7 @@ import {
 import Path, { PathItem } from "../slds/Path";
 
 import ConfigDataTable from "./ConfigDataTable";
+import PodsCompare from "./PodsCompare";
 import ServicesList from "./ServicesList";
 
 const trail = [<a href="/#/data-centers">Data Centers</a>];
@@ -101,7 +102,7 @@ class DataCenterDetails extends React.Component {
     this.setState({ selectedCluster: cluster });
   };
 
-  handleNodeSelect = (event, node) => {
+  handleNodeSelect = (event, node = {}) => {
     const { selectedNodes } = this.state;
     const nodes = selectedNodes || [];
 
@@ -133,12 +134,26 @@ class DataCenterDetails extends React.Component {
      * | Pods | Clusters | Nodes
      */
     return pods.map(pod => (
-      <ListItem pod={pod}>
+      <ListItem pod={pod} label={pod.name}>
         <ul className="slds-m-left_large">
           {pod.children && this.renderPods(pod.children)}
         </ul>
       </ListItem>
     ));
+  };
+
+  onRowChange = (e, data) => {
+    console.log("onRowChange", data);
+    const { selection } = data;
+    const { selectedNodes } = this.state;
+    selection.selected = !selection.selected;
+    if (selection.selected) {
+      const nodes = selectedNodes || [];
+      //nodes.concat(selection);
+      console.log("nodes", selection, nodes);
+      this.setState({ selectedNodes: selection });
+    }
+    // this.handleNodeSelect(e, selection);
   };
 
   render() {
@@ -165,86 +180,42 @@ class DataCenterDetails extends React.Component {
           trail={trail}
           _info={`${dataCenter.url}`}
         />
-        <br />
 
         <Grid gutters>
-          <Col size="8-of-12">
-            <Tabs variant="scoped" id="tabs-example-scoped">
-              <TabsPanel label="Item One">Item One Content</TabsPanel>
-              <TabsPanel label="Item Two">Item Two Content</TabsPanel>
-              <TabsPanel label="Item Three">Item Three Content</TabsPanel>
-              <TabsPanel disabled label="Disabled">
-                Disabled Content
+          <Col size="12-of-12">
+            <Tabs variant="" id="tabs-example-scoped">
+              <TabsPanel label="Details">
+                <Card heading="Config">
+                  <ConfigDataTable
+                    id={dataCenter.id}
+                    config={dataCenter.config}
+                  />
+                </Card>
+                <br />
+                <Card heading="Service Instances">
+                  <ServicesList services={dataCenter.services} />
+                </Card>
+              </TabsPanel>
+              <TabsPanel label="Pods">
+                <PodCards
+                  title="Pods"
+                  pods={dataCenter.pods}
+                  selection={selectedNodes}
+                  onRowChange={this.onRowChange}
+                />
+                <Grid gutters wrap>
+                  {selectedNodes &&
+                    selectedNodes.map(node => (
+                      <Col key={node.key} size="1-of-2">
+                        <CardPod {...node}>
+                          <ConfigDataTable id={node.key} config={node.config} />
+                        </CardPod>
+                        <br />
+                      </Col>
+                    ))}
+                </Grid>
               </TabsPanel>
             </Tabs>
-
-            <Card heading="Pods & Clusters" />
-
-            {/* Pods -> Clusters -> Nodes  */}
-
-            <Path
-              paths={steps}
-              actionLabel="Compare"
-              onClick={this.handlePathClick}
-            />
-
-            <Grid>
-              {/* pods */}
-              <Col size="1-of-3">
-                {dataCenter.pods.map(pod => (
-                  <ListItem
-                    label={pod.name}
-                    selected={pod.selected}
-                    onClick={e => this.handlePodSelect(e, pod)}
-                  />
-                ))}
-              </Col>
-
-              {/* clusters */}
-              <Col size="1-of-3">
-                {selectedPod &&
-                  selectedPod.children.map(cluster => (
-                    <ListItem
-                      label={cluster.name}
-                      selected={cluster.selected}
-                      onClick={e => this.handleClusterSelect(e, cluster)}
-                    />
-                  ))}
-              </Col>
-
-              {/* nodes */}
-              <Col size="1-of-3">
-                {selectedPod &&
-                  selectedCluster &&
-                  selectedCluster.children.map(n => (
-                    <ListItem
-                      label={n.name}
-                      selected={n.selected}
-                      onClick={e => this.handleNodeSelect(e, n)}
-                    />
-                  ))}
-              </Col>
-            </Grid>
-
-            <br />
-            <Card heading="Configurations" />
-
-            <Grid gutters wrap>
-              {selectedNodes &&
-                selectedNodes.map(node => (
-                  <Col key={node.key} size="1-of-2">
-                    <CardPod {...node}>
-                      <ConfigDataTable id={node.key} config={node.config} />
-                    </CardPod>
-                    <br />
-                  </Col>
-                ))}
-            </Grid>
-          </Col>
-          <Col size="4-of-12">
-            <Card heading="Service Instances">
-              <ServicesList services={dataCenter.services} />
-            </Card>
           </Col>
         </Grid>
       </div>

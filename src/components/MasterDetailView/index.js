@@ -6,8 +6,8 @@ import {
   SplitViewHeader,
   SplitViewListbox
 } from "@salesforce/design-system-react";
-import HeaderContentRight from "./HeaderContentRight";
 
+import HeaderContentRight from "./HeaderContentRight";
 import DetailsView from "./DetailsView";
 
 class MasterDetailView extends React.Component {

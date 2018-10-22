@@ -10,7 +10,7 @@ export default ({ match }) => {
   return (
     <div className="slds-m-around_small">
       <DataCenterDetails dataCenter={ds} match={match} />
-      <pre>{JSON.stringify(ds, null, 2)}</pre>
+      <pre hidden>{JSON.stringify(ds, null, 2)}</pre>
     </div>
   );
 };

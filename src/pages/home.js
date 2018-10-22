@@ -34,6 +34,8 @@ let count = 5;
 while (count--) {
   let o = Object.assign({}, listOptions[0]);
   o.id = faker.random.uuid(2);
+  o.label = faker.name.firstName();
+  o.bottomLeftText = faker.company.companyName();
   mockItems.push(o);
 }
 
@@ -52,13 +54,13 @@ class HomePage extends React.Component {
   }
   onSelect = e => {
     console.log("onSelect", e);
+    this.setState({ selected: [e.item] });
   };
   render() {
     return (
       <div>
         <div className="u-p">
           <MasterDetailView
-            multiple
             onSelect={this.onSelect}
             selected={this.state.selected}
             items={this.state.items}
