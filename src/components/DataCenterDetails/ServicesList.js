@@ -1,7 +1,7 @@
 import React from "react";
 import { MediaObject, Icon } from "@salesforce/design-system-react";
 
-export default ({ heading, services = [], icon }) => {
+export default ({ heading, services = [{ name: "Service Label" }], icon }) => {
   return (
     <div className="u-p">
       <h4>{heading}</h4>

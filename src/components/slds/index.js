@@ -36,7 +36,7 @@ export const ListItem = ({ label, selected, children, onClick }) => (
 
 export const CardPod = ({ name, children }) => (
   <Card
-    className="slds-m-left_medim"
+    className="slds-m-around_small"
     icon={<Icon category="standard" name="user" size="small" />}
     heading={name}
     key={name}

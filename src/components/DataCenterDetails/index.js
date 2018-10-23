@@ -22,7 +22,6 @@ import {
   Grid,
   Col
 } from "../slds";
-import Path, { PathItem } from "../slds/Path";
 
 import ConfigDataTable from "./ConfigDataTable";
 import PodsCompare from "./PodsCompare";
@@ -169,6 +168,7 @@ class DataCenterDetails extends React.Component {
     return (
       <div className="">
         <PageHeader
+          className="slds-m-bottom_x-small"
           label="Data Center"
           title={dataCenter.name}
           navRight={navRight}
@@ -183,7 +183,7 @@ class DataCenterDetails extends React.Component {
 
         <Grid gutters>
           <Col size="12-of-12">
-            <Tabs variant="" id="tabs-example-scoped">
+            <Tabs variant="default" id="tabs-example-scoped">
               <TabsPanel label="Details">
                 <Card heading="Config">
                   <ConfigDataTable
@@ -206,7 +206,7 @@ class DataCenterDetails extends React.Component {
                 <Grid gutters wrap>
                   {selectedNodes &&
                     selectedNodes.map(node => (
-                      <Col key={node.key} size="1-of-2">
+                      <Col size="1-of-3">
                         <CardPod {...node}>
                           <ConfigDataTable id={node.key} config={node.config} />
                         </CardPod>

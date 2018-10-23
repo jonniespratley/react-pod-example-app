@@ -82,7 +82,7 @@ export const createMockNodes = (name, count = 5) => {
     };
     n.config.forEach(c => {
       c.name = faker.random.word();
-      c.value = faker.random.alphaNumeric();
+      c.value = faker.random.number();
     });
 
     out.push(n);
@@ -91,25 +91,41 @@ export const createMockNodes = (name, count = 5) => {
 };
 
 export const mockClusters = [
-  { name: "cluster-1", children: createMockNodes("cluster-1") },
-  { name: "cluster-2", children: createMockNodes("cluster-2") },
-  { name: "cluster-3", children: createMockNodes("cluster-3") }
+  {
+    key: faker.random.uuid(),
+    name: "cluster-1",
+    children: createMockNodes("cluster-1")
+  },
+  {
+    key: faker.random.uuid(),
+    name: "cluster-2",
+    children: createMockNodes("cluster-2")
+  },
+  {
+    key: faker.random.uuid(),
+    name: "cluster-3",
+    children: createMockNodes("cluster-3")
+  }
 ];
 
 export const mockPods = [
   {
+    key: faker.random.uuid(),
     name: "pod-1",
     children: [{ name: "p1-cluster-1", children: createMockNodes("c1") }]
   },
   {
+    key: faker.random.uuid(),
     name: "pod-2",
     children: [{ name: "p2-cluster-1", children: createMockNodes("c2") }]
   },
   {
+    key: faker.random.uuid(),
     name: "pod-3",
     children: [{ name: "p3-cluster-1", children: createMockNodes("c3", 10) }]
   },
   {
+    key: faker.random.uuid(),
     name: "pod-4",
     children: [{ name: "p4-cluster-1", children: createMockNodes("c4", 10) }]
   }
@@ -125,8 +141,8 @@ export const services = [
 ];
 
 const details = [
-  { label: "Field 1", content: "Value 1" },
-  { label: "Field 2", content: "Value 2" }
+  { key: faker.random.uuid(), label: "Field 1", content: "Value 1" },
+  { key: faker.random.uuid(), label: "Field 2", content: "Value 2" }
 ];
 
 const createDataCenter = (name, data) => {
@@ -135,6 +151,7 @@ const createDataCenter = (name, data) => {
     {},
     data,
     {
+      key: faker.random.uuid(),
       id: name,
       name: name,
       label: name,
@@ -172,4 +189,5 @@ for (let i = 0; i < count; i++) {
   );
 }
 
-export const dataCenter = createDataCenter("dc-nyc-east-1");
+const dsJson = require("../mocks.json");
+export const dataCenter = dsJson || createDataCenter("dc-nyc-east-1");

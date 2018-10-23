@@ -1,9 +1,7 @@
 import React from "react";
+//slds-panel_docked slds-panel_docked-left slds-is-open
 const Panel = ({ children, id = "path", title = "Name", href = "#" }) => (
-  <div
-    className="slds-panel slds-size_medium slds-panel_docked slds-panel_docked-left slds-is-open"
-    aria-hidden="false"
-  >
+  <div className="slds-panel" aria-hidden="false">
     <div className="slds-panel__header">
       <h2
         className="slds-panel__header-title slds-text-heading_small slds-truncate"

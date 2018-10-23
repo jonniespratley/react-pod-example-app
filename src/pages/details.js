@@ -8,7 +8,7 @@ const trail = [<a href="/#/data-centers">Data Centers</a>];
 export default ({ match }) => {
   const ds = dataCenters.filter(ds => ds.id === match.params.id)[0];
   return (
-    <div className="slds-m-around_small">
+    <div className="slds-m-around_x-small">
       <DataCenterDetails dataCenter={ds} match={match} />
       <pre hidden>{JSON.stringify(ds, null, 2)}</pre>
     </div>

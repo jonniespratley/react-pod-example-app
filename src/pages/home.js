@@ -65,6 +65,7 @@ class HomePage extends React.Component {
             selected={this.state.selected}
             items={this.state.items}
           />
+          <pre>{JSON.stringify(this.state.selected, null, 2)}</pre>
 
           {/*
       <div hidden>

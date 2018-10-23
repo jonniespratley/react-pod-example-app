@@ -20,7 +20,7 @@ import DataCenterDetails from "../../pages/data-center-details";
 import { dataCenter } from "../../mocks";
 
 const navItems = [
-  // { id: "home", href: "/#", label: "Home", icon: "px-fea:catalog" },
+  // { id: "home", href: "/#/home", label: "Home", icon: "px-fea:catalog" },
   {
     id: "data-centers",
     href: "/#/data-centers",
@@ -65,6 +65,7 @@ export default class App extends React.Component {
           <Switch>
             <Route path="/data-centers" component={DataCenters} />
             <Route path="/" component={DataCenters} />
+            <Route path="/home" component={Home} />
             <Route path="/details" component={DataCenterDetails} />
             <Route component={NoMatch} />
           </Switch>

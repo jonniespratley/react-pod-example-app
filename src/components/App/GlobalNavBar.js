@@ -50,7 +50,9 @@ class GlobalNavBar extends React.Component {
             <AppLauncher
               triggerName={appName}
               modalHeaderButton={<Button label="App Exchange" />}
-            />
+            >
+              <div>Apps</div>
+            </AppLauncher>
           </GlobalNavigationBarRegion>
           <GlobalNavigationBarRegion region="secondary" navigation>
             {this.props.nav.map(item => (

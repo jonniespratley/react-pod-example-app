@@ -6,6 +6,7 @@ import {
   IconSettings,
   Tabs,
   Card,
+  Search,
   PageHeader,
   Button,
   ButtonGroup
@@ -367,7 +368,7 @@ class TreeExample extends React.Component {
 
   render() {
     return (
-      <IconSettings iconPath="/assets/icons">
+      <IconSettings iconPath="../../node_modules/@salesforce/design-system-react/assets/icons">
         <div>
           {this.props.searchable ? (
             <div>

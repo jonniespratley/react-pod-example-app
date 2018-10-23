@@ -39,8 +39,8 @@ class MasterDetailView extends React.Component {
       <div>
         <SplitViewHeader
           key="1"
-          contentRight={headerContentRight}
-          navRight={headerNavRight}
+          //contentRight={headerContentRight}
+          //navRight={headerNavRight}
           iconAssistiveText="User"
           iconCategory="standard"
           iconName="lead"
